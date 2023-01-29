@@ -46,7 +46,7 @@ class nnUNetTrainerV2(nnUNetTrainer):
         super().__init__(plans_file, fold, output_folder, dataset_directory, batch_dice, stage, unpack_data,
                          deterministic, fp16)
         self.max_num_epochs = 1000
-        self.initial_lr = 1e-2
+        self.initial_lr = 5e-3
         self.deep_supervision_scales = None
         self.ds_loss_weights = None
 
