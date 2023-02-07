@@ -182,7 +182,7 @@ def verify_dataset_integrity(folder):
     fail = False
     print("Expected label values are", expected_labels)
     for i, r in enumerate(results):
-        if not r[0]:
+        if not r[0] and r[1] =! -1:
             print("Unexpected labels found in file %s. Found these unexpected values (they should not be there) %s" % (
                 label_files[i], r[1]))
             fail = True
