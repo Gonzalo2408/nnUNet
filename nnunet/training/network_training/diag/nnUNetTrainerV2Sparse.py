@@ -55,10 +55,7 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
         """
         if self.ignore_label is not None:
             assert target.shape[1] == 1, 'not implemented for one hot encoding'
-            print('Target_shape:', target.shape)
             mask = target != self.ignore_label
-            print('Mask shape:', mask.shape)
-            print(mask)
             with torch.no_grad():
                 target_copy = target.detach().clone()
                 target_copy[~mask] = 0
