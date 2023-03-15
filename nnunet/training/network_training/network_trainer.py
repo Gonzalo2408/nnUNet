@@ -456,6 +456,7 @@ class NetworkTrainer(object):
                     l = self.run_iteration(self.tr_gen, True)
                     train_losses_epoch.append(l)
 
+            print(train_losses_epoch)
             self.all_tr_losses.append(np.mean(train_losses_epoch))
             self.print_to_log_file("train loss : %.4f" % self.all_tr_losses[-1])
 
