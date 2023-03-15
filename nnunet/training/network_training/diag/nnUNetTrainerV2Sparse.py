@@ -55,7 +55,10 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
         """
         if self.ignore_label is not None:
             assert target.shape[1] == 1, 'not implemented for one hot encoding'
+            print('Target_shape:', target.shape)
             mask = target != self.ignore_label
+            print('Mask shape:', mask.shape)
+            print(mask)
             with torch.no_grad():
                 target_copy = target.detach().clone()
                 target_copy[~mask] = 0
@@ -84,7 +87,7 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
 class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
     def __init__(self, *args, **kwargs):
         super(nnUNetTrainerV2Sparse, self).__init__(*args, **kwargs)
-        self.only_sample_from_annotated = True
+        self.only_sample_from_annotated = False
 
 
     def run_online_evaluation(self, output, target, ignore_label: int = -1):
