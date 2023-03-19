@@ -78,7 +78,7 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
         if self.aggregate == "sum":
             result = self.weight_ce * ce_loss + self.weight_dice * dc_loss
             print(result)
-            if result = np.nan:
+            if result == np.nan:
                 print('Nan detected')
         else:
             raise NotImplementedError("nah son")  # reserved for other stuff (later)
