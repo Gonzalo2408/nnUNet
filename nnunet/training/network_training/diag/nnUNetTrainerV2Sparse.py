@@ -64,18 +64,12 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
             mask = None
             target_copy = target
 
-        print(mask.shape)
-
         dc_loss = self.dc(net_output, target_copy, loss_mask=mask) if self.weight_dice != 0 else 0
-        if torch.any(dc_loss) == np.nan:
-            print('Nan values in dc_loss')
 
         if self.log_dice:
             dc_loss = -torch.log(-dc_loss)
 
         ce_loss = self.ce(net_output, target_copy[:, 0].long()) if self.weight_ce != 0 else 0
-        if torch.any(ce_loss) == np.nan:
-            print('Nan values in ce_loss')
 
         if self.ignore_label is not None:
             ce_loss *= mask[:, 0]
@@ -83,6 +77,9 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
 
         if self.aggregate == "sum":
             result = self.weight_ce * ce_loss + self.weight_dice * dc_loss
+            print(result)
+            if result = np.nan:
+                print('Nan detected')
         else:
             raise NotImplementedError("nah son")  # reserved for other stuff (later)
         return result
