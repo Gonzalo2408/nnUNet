@@ -128,12 +128,6 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
             y_onehot = torch.zeros(shp_x, device=net_output.device)
             y_onehot.scatter_(1, gt, 1)
 
-    if torch.isnan(net_output).any():
-        print('Nans in net_output')
-
-    if torch.isnan(y_onehot).any():
-        print('Nans in y_onehot')
-
     tp = net_output * y_onehot
     fp = net_output * (1 - y_onehot)
     fn = (1 - net_output) * y_onehot
@@ -156,6 +150,18 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         fp = sum_tensor(fp, axes, keepdim=False)
         fn = sum_tensor(fn, axes, keepdim=False)
         tn = sum_tensor(tn, axes, keepdim=False)
+
+    if torch.isnan(tp).any():
+        print('Nans in tp')
+
+    if torch.isnan(fp).any():
+        print('Nans in fp')
+
+    if torch.isnan(fn).any():
+        print('Nans in fn')
+
+    if torch.isnan(tn).any():
+        print('Nans in tn')
 
     return tp, fp, fn, tn
 
