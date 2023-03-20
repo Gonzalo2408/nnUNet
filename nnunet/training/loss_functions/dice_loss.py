@@ -133,13 +133,6 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
     fn = (1 - net_output) * y_onehot
     tn = (1 - net_output) * (1 - y_onehot)
 
-    if torch.isnan(tp).any():
-        print('Nan values in TP')
-    if torch.isnan(fp).any():
-        print('Nan values in FP')
-    if torch.isnan(fn).any():
-        print('Nan values in FN')
-
     if mask is not None:
         tp = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(tp, dim=1)), dim=1)
         fp = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(fp, dim=1)), dim=1)
@@ -179,6 +172,13 @@ class SoftDiceLoss(nn.Module):
             axes = [0] + list(range(2, len(shp_x)))
         else:
             axes = list(range(2, len(shp_x)))
+
+        if torch.isnan(x).any():
+            print('Nan values in x')
+
+        if torch.isnan(y).any():
+            print('Nan values in y') 
+        
 
         if self.apply_nonlin is not None:
             x = self.apply_nonlin(x)
