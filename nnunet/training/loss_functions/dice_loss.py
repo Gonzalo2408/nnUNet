@@ -173,13 +173,6 @@ class SoftDiceLoss(nn.Module):
         else:
             axes = list(range(2, len(shp_x)))
 
-        if torch.isnan(x).any():
-            print('Nan values in x')
-
-        if torch.isnan(y).any():
-            print('Nan values in y') 
-        
-
         if self.apply_nonlin is not None:
             x = self.apply_nonlin(x)
 
