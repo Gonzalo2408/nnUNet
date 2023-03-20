@@ -124,6 +124,15 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
             self.online_eval_fp.append(list(fp_hard))
             self.online_eval_fn.append(list(fn_hard))
 
+            if torch.isnan(tp_hard).any():
+                print('Nan in tp_hard')
+            
+            if torch.isnan(fp_hard).any():
+                print('Nan in fp_hard')
+
+            if torch.isnan(fn_hard).any():
+                print('Nan in fn_hard')
+
 
     def initialize(self, training=True, force_load_plans=False):
         """
@@ -161,13 +170,10 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                     for i in range(1, net_numpool)
                 ]
             )
-            if np.isnan(mask).any():
-                print('Nans in mask')
+
             weights[~mask] = 0
             weights = weights / weights.sum()
 
-            if np.isnan(weights).any():
-                print('Nans in weights')
             self.ds_loss_weights = weights
             # now wrap the loss
             print(
