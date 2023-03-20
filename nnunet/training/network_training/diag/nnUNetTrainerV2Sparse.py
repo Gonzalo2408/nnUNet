@@ -18,7 +18,7 @@ from nnunet.utilities.tensor_utilities import sum_tensor
 
 
 class DC_and_CE_loss_with_retained_output(torch.nn.Module):
-    def __init__(self, soft_dice_kwargs, ce_kwargs, aggregate="sum", square_dice=False, weight_ce=1, weight_dice=1,
+    def __init__(self, soft_dice_kwargs, ce_kwargs, aggregate="sum", square_dice=False, weight_ce=0, weight_dice=10,
                  log_dice=False, ignore_label=None):
         """
         CAREFUL. Weights for CE and Dice do not need to sum to one. You can set whatever you want.
@@ -75,6 +75,8 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
             ce_loss *= mask[:, 0]
             ce_loss = ce_loss.sum() / mask.sum()
 
+        print('ce loss', ce_loss)
+        print('dc loss', dc_loss)
 
         if self.aggregate == "sum":
             result = self.weight_ce * ce_loss + self.weight_dice * dc_loss

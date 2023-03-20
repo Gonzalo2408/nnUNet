@@ -662,9 +662,6 @@ class NetworkTrainer(object):
 
         del target
 
-        if torch.isnan(l).any():
-            print('l is nan')
-
         return l.detach().cpu().numpy()
 
     def run_online_evaluation(self, *args, **kwargs):
