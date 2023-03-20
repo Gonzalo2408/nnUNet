@@ -132,9 +132,13 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
     fp = net_output * (1 - y_onehot)
     fn = (1 - net_output) * y_onehot
     tn = (1 - net_output) * (1 - y_onehot)
-    print('TP',tp)
-    print('FP',fp)
-    print('FN',fn)
+
+    if torch.isnan(tp).any():
+        print('Nan values in TP')
+    if torch.isnan(fp).any():
+        print('Nan values in FP')
+    if torch.isnan(fn).any():
+        print('Nan values in FN')
 
     if mask is not None:
         tp = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(tp, dim=1)), dim=1)
