@@ -151,18 +151,6 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         fn = sum_tensor(fn, axes, keepdim=False)
         tn = sum_tensor(tn, axes, keepdim=False)
 
-    if torch.isnan(tp).any():
-        print('Nans in tp')
-
-    if torch.isnan(fp).any():
-        print('Nans in fp')
-
-    if torch.isnan(fn).any():
-        print('Nans in fn')
-
-    if torch.isnan(tn).any():
-        print('Nans in tn')
-
     return tp, fp, fn, tn
 
 
