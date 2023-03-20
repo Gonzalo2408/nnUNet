@@ -466,7 +466,7 @@ class NetworkTrainer(object):
                 for b in range(self.num_val_batches_per_epoch):
                     l = self.run_iteration(self.val_gen, False, True)
                     val_losses.append(l)
-                self.all_val_losses.append(np.mean(val_losses))
+                self.all_val_losses.append(np.nanmean(val_losses))
                 self.print_to_log_file("validation loss: %.4f" % self.all_val_losses[-1])
 
                 if self.also_val_in_tr_mode:
