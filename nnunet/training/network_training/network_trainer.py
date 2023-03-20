@@ -644,6 +644,8 @@ class NetworkTrainer(object):
         if self.fp16:
             with autocast():
                 output = self.network(data)
+                if torch.isnan(output).any():
+                    print('Nans in output')
                 del data
                 l = self.loss(output, target)
 
@@ -653,6 +655,8 @@ class NetworkTrainer(object):
                 self.amp_grad_scaler.update()
         else:
             output = self.network(data)
+            if torch.isnan(output).any():
+                print('Nans in output')
             del data
             l = self.loss(output, target)
 
