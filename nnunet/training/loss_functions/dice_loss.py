@@ -177,6 +177,9 @@ class SoftDiceLoss(nn.Module):
             x = self.apply_nonlin(x)
 
         tp, fp, fn, _ = get_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+        print('TP',tp)
+        print('FP',fp)
+        print('FN',fn)
 
         nominator = 2 * tp + self.smooth
         denominator = 2 * tp + fp + fn + self.smooth
