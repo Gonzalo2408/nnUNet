@@ -632,12 +632,6 @@ class NetworkTrainer(object):
         data = maybe_to_torch(data)
         target = maybe_to_torch(target)
 
-        if torch.isnan(data).any():
-            print('Nans in data')
-
-        if torch.isnan(target).any():
-            print('Nans in target')
-
         if torch.cuda.is_available():
             data = to_cuda(data)
             target = to_cuda(target)
