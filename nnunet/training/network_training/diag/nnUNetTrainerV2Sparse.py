@@ -76,7 +76,7 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
             ce_loss = ce_loss.sum() / mask.sum()
 
         if self.aggregate == "sum":
-            result = torch.nansum(self.weight_ce * ce_loss, self.weight_dice * dc_loss)
+            result = self.weight_ce * ce_loss + self.weight_dice * dc_loss
 
         else:
             raise NotImplementedError("nah son")  # reserved for other stuff (later)
