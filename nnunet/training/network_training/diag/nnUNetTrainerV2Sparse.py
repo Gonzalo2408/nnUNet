@@ -102,13 +102,6 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
             num_classes = output.shape[1]
             output_softmax = softmax_helper(output)
             output_seg = output_softmax.argmax(1)
-            
-            if torch.isnan(output_softmax).any():
-                print('Nan values in output_softmax')
-
-            if torch.isnan(output_seg).any():
-                print('Nan values in output_seg')
-
 
             target = target[:, 0]
             axes = tuple(range(1, len(target.shape)))
@@ -116,9 +109,6 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
             fp_hard = torch.zeros((target.shape[0], num_classes - 1)).to(output_seg.device.index)
             fn_hard = torch.zeros((target.shape[0], num_classes - 1)).to(output_seg.device.index)
             sparse_mask = (target != ignore_label).float()
-            
-            if torch.isnan(sparse_mask).any():
-                print('Nan values in sparse_mask')
 
             for c in range(1, num_classes):
                 tp_hard[:, c - 1] = sum_tensor((output_seg == c).float() * (target == c).float() * sparse_mask, axes=axes)

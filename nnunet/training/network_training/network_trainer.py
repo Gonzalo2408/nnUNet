@@ -447,6 +447,9 @@ class NetworkTrainer(object):
                     for b in tbar:
                         tbar.set_description("Epoch {}/{}".format(self.epoch+1, self.max_num_epochs))
 
+                        if torch.isnan(self.tr_gen).any():
+                            print('Nan values in tr_gen')
+
                         l = self.run_iteration(self.tr_gen, True)
 
                         tbar.set_postfix(loss=l)
