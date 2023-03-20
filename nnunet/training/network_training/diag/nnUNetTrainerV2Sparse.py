@@ -161,8 +161,13 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                     for i in range(1, net_numpool)
                 ]
             )
+            if np.isnan(mask).any():
+                print('Nans in mask')
             weights[~mask] = 0
             weights = weights / weights.sum()
+
+            if np.isnan(weights).any():
+                print('Nans in weights')
             self.ds_loss_weights = weights
             # now wrap the loss
             print(

@@ -447,9 +447,6 @@ class NetworkTrainer(object):
                     for b in tbar:
                         tbar.set_description("Epoch {}/{}".format(self.epoch+1, self.max_num_epochs))
 
-                        if torch.isnan(self.tr_gen).any():
-                            print('Nan values in tr_gen')
-
                         l = self.run_iteration(self.tr_gen, True)
 
                         tbar.set_postfix(loss=l)
@@ -635,6 +632,12 @@ class NetworkTrainer(object):
         data = maybe_to_torch(data)
         target = maybe_to_torch(target)
 
+        if torch.isnan(data).any():
+            print('Nans in data')
+
+        if torch.isnan(target).any():
+            print('Nans in target')
+
         if torch.cuda.is_available():
             data = to_cuda(data)
             target = to_cuda(target)
@@ -644,8 +647,6 @@ class NetworkTrainer(object):
         if self.fp16:
             with autocast():
                 output = self.network(data)
-                if torch.isnan(output).any():
-                    print('Nans in output')
                 del data
                 l = self.loss(output, target)
 
@@ -655,8 +656,6 @@ class NetworkTrainer(object):
                 self.amp_grad_scaler.update()
         else:
             output = self.network(data)
-            if torch.isnan(output).any():
-                print('Nans in output')
             del data
             l = self.loss(output, target)
 
