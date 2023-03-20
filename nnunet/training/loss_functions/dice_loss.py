@@ -132,6 +132,9 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
     fp = net_output * (1 - y_onehot)
     fn = (1 - net_output) * y_onehot
     tn = (1 - net_output) * (1 - y_onehot)
+    print('TP',tp)
+    print('FP',fp)
+    print('FN',fn)
 
     if mask is not None:
         tp = torch.stack(tuple(x_i * mask[:, 0] for x_i in torch.unbind(tp, dim=1)), dim=1)
@@ -177,9 +180,6 @@ class SoftDiceLoss(nn.Module):
             x = self.apply_nonlin(x)
 
         tp, fp, fn, _ = get_tp_fp_fn_tn(x, y, axes, loss_mask, False)
-        print('TP',tp)
-        print('FP',fp)
-        print('FN',fn)
 
         nominator = 2 * tp + self.smooth
         denominator = 2 * tp + fp + fn + self.smooth
