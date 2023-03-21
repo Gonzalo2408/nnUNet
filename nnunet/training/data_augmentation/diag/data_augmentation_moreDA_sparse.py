@@ -106,9 +106,9 @@ def get_moreDA_augmentation_sparse(
         spatial_tf_class(
             patch_size_spatial,
             patch_center_dist_from_border=np.array(patch_size_spatial) // 2,  # recommended value
-            do_elastic_deform=params.get("do_elastic"),
-            alpha=params.get("elastic_deform_alpha"),
-            sigma=params.get("elastic_deform_sigma"),
+            #do_elastic_deform=params.get("do_elastic"),
+            #alpha=params.get("elastic_deform_alpha"),
+            #sigma=params.get("elastic_deform_sigma"),
             do_rotation=params.get("do_rotation"),
             angle_x=params.get("rotation_x"),
             angle_y=params.get("rotation_y"),
