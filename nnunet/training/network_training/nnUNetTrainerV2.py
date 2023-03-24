@@ -111,6 +111,7 @@ class nnUNetTrainerV2(nnUNetTrainer):
                     pin_memory=self.pin_memory,
                     use_nondetMultiThreadedAugmenter=False
                 )
+                print(self.tr_gen)
                 self.print_to_log_file("TRAINING KEYS:\n %s" % (str(self.dataset_tr.keys())),
                                        also_print_to_console=False)
                 self.print_to_log_file("VALIDATION KEYS:\n %s" % (str(self.dataset_val.keys())),
