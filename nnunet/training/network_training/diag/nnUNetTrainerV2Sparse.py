@@ -210,6 +210,8 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                     use_nondetMultiThreadedAugmenter=False,
                     only_sample_from_annotated=self.only_sample_from_annotated,
                 )
+                print(self.tr_gen)
+                
                 self.print_to_log_file(
                     "TRAINING KEYS:\n %s" % (str(self.dataset_tr.keys())),
                     also_print_to_console=False,
