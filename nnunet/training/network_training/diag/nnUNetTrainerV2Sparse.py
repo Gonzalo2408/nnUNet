@@ -197,9 +197,7 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                         "will wait all winter for your model to finish!"
                     )
 
-                print('Props', self.dl_tr['properties'])
-                print('Keys', self.dl_tr['keys'])
-                print('Imgs', self.dl_tr['data'])
+                print(self.dl_tr)
                 print("Add data augmentation with support for sparse annotations...")
                 (
                     self.tr_gen,
