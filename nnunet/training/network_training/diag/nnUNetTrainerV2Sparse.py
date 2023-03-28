@@ -197,7 +197,6 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                         "will wait all winter for your model to finish!"
                     )
 
-                print(self.dl_tr)
                 print("Add data augmentation with support for sparse annotations...")
                 (
                     self.tr_gen,

@@ -590,6 +590,10 @@ class DataLoader2D(SlimDataLoaderBase):
             seg[j] = case_all_data_segonly
 
         keys = selected_keys
+
+        print('keys', keys)
+        print('properties', properties)
+        print('data', data)
         return {'data': data, 'seg': seg, 'properties': case_properties, "keys": keys}
 
 
