@@ -196,6 +196,10 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                         "INFO: Not unpacking data! Training may be slow due to that. Pray you are not using 2d or you "
                         "will wait all winter for your model to finish!"
                     )
+
+                print('Props', self.dl_tr['properties'])
+                print('Keys', self.dl_tr['keys'])
+                print('Imgs', self.dl_tr['data'])
                 print("Add data augmentation with support for sparse annotations...")
                 (
                     self.tr_gen,
@@ -210,7 +214,6 @@ class nnUNetTrainerV2Sparse(nnUNetTrainerV2):
                     use_nondetMultiThreadedAugmenter=False,
                     only_sample_from_annotated=self.only_sample_from_annotated,
                 )
-                print(self.tr_gen)
                 
                 self.print_to_log_file(
                     "TRAINING KEYS:\n %s" % (str(self.dataset_tr.keys())),
