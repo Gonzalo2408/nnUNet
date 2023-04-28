@@ -1,6 +1,6 @@
 import numpy as np
 
-from batchgenerators.dataloading.multi_threaded_augmenter import MultiThreadedAugmenter, SingleThreadedAugmenter
+from batchgenerators.dataloading.multi_threaded_augmenter import MultiThreadedAugmenter
 from batchgenerators.transforms.abstract_transforms import Compose
 from batchgenerators.transforms.channel_selection_transforms import (
     DataChannelSelectionTransform,
