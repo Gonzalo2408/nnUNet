@@ -18,7 +18,7 @@ from nnunet.utilities.tensor_utilities import sum_tensor
 
 
 class DC_and_CE_loss_with_retained_output(torch.nn.Module):
-    def __init__(self, soft_dice_kwargs, ce_kwargs, aggregate="sum", square_dice=False, weight_ce=1, weight_dice=1,
+    def __init__(self, soft_dice_kwargs, ce_kwargs, aggregate="sum", square_dice=False, weight_ce=0.8, weight_dice=3,
                  log_dice=False, ignore_label=None):
         """
         CAREFUL. Weights for CE and Dice do not need to sum to one. You can set whatever you want.
@@ -29,6 +29,7 @@ class DC_and_CE_loss_with_retained_output(torch.nn.Module):
         :param weight_ce:
         :param weight_dice:
         """
+        print('Using DC weight', weight_dice, 'and CE weight', weight_ce)
         super(DC_and_CE_loss_with_retained_output, self).__init__()
         if ignore_label is not None:
             assert not square_dice, 'not implemented'
