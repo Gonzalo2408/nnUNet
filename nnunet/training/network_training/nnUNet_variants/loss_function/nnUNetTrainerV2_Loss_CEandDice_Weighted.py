@@ -20,8 +20,11 @@ from nnunet.training.network_training.nnUNetTrainerV2 import nnUNetTrainerV2
 class nnUNetTrainer_V2_Loss_CEandDice_Weighted(nnUNetTrainerV2):
     def __init__(self, plans_file, fold, output_folder=None, dataset_directory=None, batch_dice=True, stage=None,
                  unpack_data=True, deterministic=True, fp16=False, **kwargs):
+        
         super().__init__(plans_file, fold, output_folder, dataset_directory, batch_dice, stage, unpack_data,
-                         deterministic, fp16)
+                         deterministic, fp16, **kwargs)
+        
+        print(**kwargs)
         self.loss = DCandCEWeightedLoss(
             ignore_label=kwargs.get('ignore_label', -100),
             class_weights=kwargs.get('class_weights', [0.109, 0.695, 1.41, 1.322, 2.536, 10.889, 4.698, 5.802, 19.474, 739.368, 1553.895, 15430.272, 133.963]),
