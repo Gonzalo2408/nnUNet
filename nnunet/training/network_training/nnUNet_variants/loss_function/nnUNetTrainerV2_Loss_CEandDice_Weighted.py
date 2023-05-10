@@ -23,10 +23,10 @@ class nnUNetTrainer_V2_Loss_CEandDice_Weighted(nnUNetTrainerV2):
         super().__init__(plans_file, fold, output_folder, dataset_directory, batch_dice, stage, unpack_data,
                          deterministic, fp16)
         self.loss = DCandCEWeightedLoss(
-            ignore_label=kwargs.get('ignore_label', None),
-            class_weights=kwargs.get('class_weights', []),
-            weight_dc=kwargs.get('weight_dc', 1),
-            weight_ce=kwargs.get('weight_ce', 1),
+            ignore_label=kwargs.get('ignore_label', -100),
+            class_weights=kwargs.get('class_weights', [0.109, 0.695, 1.41, 1.322, 2.536, 10.889, 4.698, 5.802, 19.474, 739.368, 1553.895, 15430.272, 133.963]),
+            weight_dc=kwargs.get('weight_dc', 3),
+            weight_ce=kwargs.get('weight_ce', 0.8),
             soft_dice_kwargs=kwargs.get("soft_dice_kwargs", {'batch_dice': self.batch_dice, 'smooth': 1e-5,
                                                              'do_bg': False}),
             ce_kwargs=kwargs.get("ce_kwargs", {})
