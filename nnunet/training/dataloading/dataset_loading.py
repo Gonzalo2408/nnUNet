@@ -591,9 +591,6 @@ class DataLoader2D(SlimDataLoaderBase):
 
         keys = selected_keys
 
-        print('keys', keys)
-        print('properties', properties)
-        print('data', data)
         return {'data': data, 'seg': seg, 'properties': case_properties, "keys": keys}
 
 

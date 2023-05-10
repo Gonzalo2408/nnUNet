@@ -153,9 +153,6 @@ def augment_spatial_sparse(data, seg, sample_mask, patch_size, patch_center_dist
                     p_rot_per_axis: float = 1, p_independent_scale_per_axis: int = 1,
                     sample_on_sparse_mask_only: bool=True):
     dim = len(patch_size)
-    print(sample_mask.shape, sample_mask.unique)
-    print(sample_mask)
-    print('#######\n')
     seg_result = None
     if seg is not None:
         if dim == 2:
@@ -176,7 +173,6 @@ def augment_spatial_sparse(data, seg, sample_mask, patch_size, patch_center_dist
     # precompute these values here only once...
     data_shape = np.array(data.shape[2:])
     idx_array = np.arange(np.prod(data_shape)).reshape(data_shape) if sample_on_sparse_mask_only else None
-    print(idx_array)
 
     for sample_id in range(data.shape[0]):
         coords = create_zero_centered_coordinate_mesh(patch_size)
