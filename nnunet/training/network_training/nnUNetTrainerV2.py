@@ -87,7 +87,6 @@ class nnUNetTrainerV2(nnUNetTrainer):
             self.ds_loss_weights = weights
             # now wrap the loss
             self.loss = MultipleOutputLoss2(self.loss, self.ds_loss_weights)
-            print(self.loss)
             ################# END ###################
 
             self.folder_with_preprocessed_data = join(self.dataset_directory, self.plans['data_identifier'] +

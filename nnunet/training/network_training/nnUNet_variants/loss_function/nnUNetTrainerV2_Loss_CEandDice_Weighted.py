@@ -34,5 +34,5 @@ class nnUNetTrainer_V2_Loss_CEandDice_Weighted(nnUNetTrainerV2):
                                                              'do_bg': False}),
             ce_kwargs=kwargs.get("ce_kwargs", {})
         )
-        print(f"Using DCandCEWeightedLoss with the following parameters:\n {pprint(kwargs)}")
-        print(f"This is the loss:\n {pprint(self.loss)}")
+        print('Using these arguments', kwargs)
+        #print(f"Using DCandCEWeightedLoss with the following parameters:\n {pprint(kwargs)}")
