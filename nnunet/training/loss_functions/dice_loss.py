@@ -432,11 +432,11 @@ class DCandCEWeightedLoss(DC_and_CE_loss):
         """
         Weighted version of the DC and CE loss combination.
         """
-        super(DCandCEWeightedLoss, self).__init__(soft_dice_kwargs, ce_kwargs, weight_dice=weight_dc,
-                                                  weight_ce=weight_ce)
-        self.ignore_label = ignore_label
+        super(DCandCEWeightedLoss, self).__init__(soft_dice_kwargs, ce_kwargs, weight_dice=3.0,
+                                                  weight_ce=0.8)
+        self.ignore_label = -100
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        self.class_weights = self.to_tensor(np.array(class_weights))
+        self.class_weights = self.to_tensor(np.array([0.109, 0.695, 1.41, 1.322, 2.536, 10.889, 4.698, 5.802, 19.474, 739.368, 1553.895, 15430.272, 133.963]))
         self.dc = SoftDiceLoss(apply_nonlin=softmax_helper, **soft_dice_kwargs)
         self.ce = RobustCrossEntropyLoss(weight=self.class_weights, ignore_index=ignore_label, **ce_kwargs)
 
