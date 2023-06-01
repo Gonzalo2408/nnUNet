@@ -220,7 +220,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             mixed_precision=mixed_precision)[1]
         
         print('saving model network')
-        torch.onnx.export(trainer.network, torch.from_numpy(softmax), '/mnt/netcache/diag/grodriguez/CardiacOCT/data-2d/results/nnUNet/2d/Task508_CardiacOCT/nnUNetTrainer_V2_Loss_CEandDice_Weighted__nnUNetPlansv2.1/{}.onnx'.format(output_filename))
+        torch.onnx.export(trainer.network, d, '/mnt/netcache/diag/grodriguez/CardiacOCT/data-2d/results/nnUNet/2d/Task508_CardiacOCT/nnUNetTrainer_V2_Loss_CEandDice_Weighted__nnUNetPlansv2.1/{}.onnx'.format(output_filename))
 
         for p in params[1:]:
             trainer.load_checkpoint_ram(p, False)
