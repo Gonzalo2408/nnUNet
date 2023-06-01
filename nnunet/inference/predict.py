@@ -218,7 +218,10 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=True,
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
-        
+
+        print('Shape d', d.shape)
+        print('Shape dct,', dct.shape)
+        print('Data shape', data.shape)        
         print('saving model network')
         torch.onnx.export(trainer.network, torch.from_numpy(data), '/mnt/netcache/diag/grodriguez/CardiacOCT/data-2d/results/nnUNet/2d/Task508_CardiacOCT/nnUNetTrainer_V2_Loss_CEandDice_Weighted__nnUNetPlansv2.1/{}.onnx'.format(output_filename))
 
