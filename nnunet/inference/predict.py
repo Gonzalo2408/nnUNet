@@ -185,7 +185,9 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
     print("loading parameters for folds,", folds)
     trainer, params = load_model_and_checkpoint_files(model, folds, mixed_precision=mixed_precision,
                                                       checkpoint_name=checkpoint_name)
-
+    
+    print('saving model network ')
+    torch.save(trainer.network, '/mnt/netcache/diag/grodriguez/CardiacOCT/data-2d/results/nnUNet/2d/Task508_CardiacOCT/nnUNetTrainer_V2_Loss_CEandDice_Weighted__nnUNetPlansv2.1/model.pt')
     if segmentation_export_kwargs is None:
         if 'segmentation_export_params' in trainer.plans.keys():
             force_separate_z = trainer.plans['segmentation_export_params']['force_separate_z']
@@ -215,8 +217,6 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
         print("predicting", output_filename)
         trainer.load_checkpoint_ram(params[0], False)
-        print('This is the network architecture \n', trainer.network)
-        print('##########')
         softmax = trainer.predict_preprocessed_data_return_seg_and_softmax(
             d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=True,
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
