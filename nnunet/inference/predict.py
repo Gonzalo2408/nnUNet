@@ -229,11 +229,9 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         model_children = list(trainer.network.children())
         #counter to keep count of the conv layers
         counter = 0
-        print('model children', model_children)
-        print('###################\n')
         #append all the conv layers and their respective weights to the list
         for i in range(len(model_children)):
-            print(i)
+            print(model_children[i])
             if type(model_children[i]) == torch.nn.Conv2d:
                 counter+=1
                 model_weights.append(model_children[i].weight)
