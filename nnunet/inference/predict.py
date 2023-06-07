@@ -252,7 +252,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
                         for l in range(len(model_children[i][j][k])):
 
-                            print(model_children[i][j][k][l])
+                            print(type(model_children[i][j][k][l]))
 
                             if type(model_children[i][j][k][l]) == torch.nn.Conv2d:
 
