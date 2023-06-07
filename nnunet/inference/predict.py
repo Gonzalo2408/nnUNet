@@ -235,27 +235,34 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         for i in range(len(model_children)):
         
             for j in range(len(model_children[i])):
+
+                print(type(model[i][j]))
+
+                if type(model_children[i][j]) == torch.nn.Conv2d:
+
+                    counter += 1
+                    model_weights.append(model_children[i][j].weight)
+                    conv_layers.append(model_children[i][j])
+
+                elif type(model_children[i][j]) == torch.nn.Sequential:
+
+                    for k in range(len(model_children[i][j])):
+
+                        print((model_children[i][j][k]))
                 
-                print('This is one child')
-                print(model_children[i][j])
 
+            # if type(model_children[i]) == torch.nn.Conv2d:
+            #     counter+=1
+            #     model_weights.append(model_children[i].weight)
+            #     conv_layers.append(model_children[i])
 
-
-
-                
-
-            if type(model_children[i]) == torch.nn.Conv2d:
-                counter+=1
-                model_weights.append(model_children[i].weight)
-                conv_layers.append(model_children[i])
-
-            elif type(model_children[i]) == torch.nn.Sequential:
-                for j in range(len(model_children[i])):
-                    for child in model_children[i][j]:
-                        if type(child) == torch.nn.Conv2d:
-                            counter+=1
-                            model_weights.append(child.weight)
-                            conv_layers.append(child)
+            # elif type(model_children[i]) == torch.nn.Sequential:
+            #     for j in range(len(model_children[i])):
+            #         for child in model_children[i][j]:
+            #             if type(child) == torch.nn.Conv2d:
+            #                 counter+=1
+            #                 model_weights.append(child.weight)
+            #                 conv_layers.append(child)
         print(f"Total convolution layers: {counter}")
         print("conv_layers", conv_layers)
         # vars(trainer)["patch_size"]
