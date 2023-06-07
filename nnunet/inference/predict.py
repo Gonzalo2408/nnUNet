@@ -236,8 +236,6 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         
             for j in range(len(model_children[i])):
 
-                print(type(model_children[i][j]))
-
                 if type(model_children[i][j]) == torch.nn.Conv2d:
 
                     counter += 1
@@ -246,19 +244,22 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
                 elif type(model_children[i][j]) == torch.nn.Sequential:
 
-                    print('Seq detected')
-
                     for k in range(len(model_children[i][j])):
 
                         seq_children = list(model_children[i][j][k].children())
+                        print(seq_children)
 
-                        for l in range(len(seq_children)):
+                        for element in range(len(seq_children)):
 
-                            if type(seq_children[l]) == torch.nn.Conv2d:
+                            print(element)
 
-                                counter += 1
-                                model_weights.append(model_children[i][j][k][l].weight)
-                                conv_layers.append(model_children[i][j][k][l])
+
+                        print('################\n')
+                           
+
+                                # counter += 1
+                                # model_weights.append(model_children[i][j][k][l].weight)
+                                # conv_layers.append(model_children[i][j][k][l])
 
             # if type(model_children[i]) == torch.nn.Conv2d:
             #     counter+=1
