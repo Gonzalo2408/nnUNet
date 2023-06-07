@@ -222,7 +222,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
         print('architecture', trainer.network)
         print('###################\n')
-        model_weights =[]
+        model_weights = []
         #we will save the 49 conv layers in this list
         conv_layers = []
         # get all the model children as list
@@ -231,7 +231,6 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         counter = 0
         #append all the conv layers and their respective weights to the list
         for i in range(len(model_children)):
-            print(model_children[i])
             if type(model_children[i]) == torch.nn.Conv2d:
                 counter+=1
                 model_weights.append(model_children[i].weight)
@@ -239,6 +238,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             elif type(model_children[i]) == torch.nn.Sequential:
                 for j in range(len(model_children[i])):
                     for child in model_children[i][j]:
+                        print('This is child', type(child))
                         if type(child) == torch.nn.Conv2d:
                             counter+=1
                             model_weights.append(child.weight)
