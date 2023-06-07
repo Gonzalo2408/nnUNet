@@ -32,6 +32,7 @@ from nnunet.training.model_restore import load_model_and_checkpoint_files
 from nnunet.training.network_training.nnUNetTrainer import nnUNetTrainer
 from nnunet.utilities.one_hot_encoding import to_one_hot
 from nnunet.utilities.switches import use_alt_resampling
+import os
 
 
 def preprocess_save_to_queue(preprocess_fn, q, list_of_lists, output_files, segs_from_prev_stage, classes,
@@ -220,6 +221,28 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             mixed_precision=mixed_precision)[1]
 
         print(trainer.network)
+        model_weights =[]
+        #we will save the 49 conv layers in this list
+        conv_layers = []
+        # get all the model children as list
+        model_children = list(trainer.network.children())
+        #counter to keep count of the conv layers
+        counter = 0
+        #append all the conv layers and their respective wights to the list
+        for i in range(len(model_children)):
+            if type(model_children[i]) == torch.nn.Conv2d:
+                counter+=1
+                model_weights.append(model_children[i].weight)
+                conv_layers.append(model_children[i])
+            elif type(model_children[i]) == torch.nn.Sequential:
+                for j in range(len(model_children[i])):
+                    for child in model_children[i][j].children():
+                        if type(child) == torch.nn.Conv2d:
+                            counter+=1
+                            model_weights.append(child.weight)
+                            conv_layers.append(child)
+        print(f"Total convolution layers: {counter}")
+        print("conv_layers")
         # vars(trainer)["patch_size"]
         # # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
         # patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
