@@ -247,11 +247,14 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                     for k in range(len(model_children[i][j])):
 
                         seq_children = list(model_children[i][j][k].children())
-                        print(seq_children)
 
                         for element in range(len(seq_children)):
 
-                            print(element)
+                            print(seq_children[element])
+                            if seq_children[element] == torch.nn.Conv2d:
+                                counter += 1
+                                model_weights.append(seq_children[element].weight)
+                                conv_layers.append(seq_children[element])
 
 
                         print('################\n')
