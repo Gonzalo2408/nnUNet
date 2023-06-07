@@ -220,15 +220,15 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
 
-        print('architecture with type {}. {}'.format(type(trainer.network), trainer.network))
-        print('###################\n')
+        # print('architecture with type {}. {}'.format(type(trainer.network), trainer.network))
+        # print('###################\n')
         model_weights = []
         #we will save the 49 conv layers in this list
         conv_layers = []
         # get all the model children as list
         model_children = list(trainer.network.children())
-        print('architecture', model_children)
-        print('###################\n')
+        # print('architecture', model_children)
+        # print('###################\n')
         #counter to keep count of the conv layers
         counter = 0
         #append all the conv layers and their respective weights to the list
@@ -249,6 +249,8 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                     print('Seq detected')
 
                     for k in range(len(model_children[i][j])):
+
+                        print(model_children[i][j][k])
 
                         for l in range(len(model_children[i][j][k])):
 
