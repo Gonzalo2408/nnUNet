@@ -220,7 +220,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
 
-        print('architecture with type {}. {}', format(type(trainer.network), trainer.network))
+        print('architecture with type {}. {}'.format(type(trainer.network), trainer.network))
         print('###################\n')
         model_weights = []
         #we will save the 49 conv layers in this list
@@ -235,7 +235,8 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         for i in range(len(model_children)):
         
             for j in range(len(model_children[i])):
-            
+                
+                print('This is one child')
                 print(model_children[i][j])
 
 
