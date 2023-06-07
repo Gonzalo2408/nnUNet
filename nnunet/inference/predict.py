@@ -219,14 +219,15 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
 
-        vars(trainer)["patch_size"]
-        # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
-        patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
-        print(patch_size)
+        print(trainer.network)
+        # vars(trainer)["patch_size"]
+        # # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
+        # patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
+        # print(patch_size)
 
-        dummy_input = torch.randn(1, 21, 768, 768, device='cuda')
-        print('saving model network')
-        torch.onnx.export(trainer.network, dummy_input, '/mnt/netcache/diag/grodriguez/CardiacOCT/model7.onnx'.format(output_filename))
+        # dummy_input = torch.randn(1, 21, 768, 768, device='cuda')
+        # print('saving model network')
+        # torch.onnx.export(trainer.network, dummy_input, '/mnt/netcache/diag/grodriguez/CardiacOCT/model7.onnx'.format(output_filename))
 
         for p in params[1:]:
             trainer.load_checkpoint_ram(p, False)
