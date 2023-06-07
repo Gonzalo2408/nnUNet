@@ -227,37 +227,39 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         conv_layers = []
         # get all the model children as list
         model_children = list(trainer.network.children())
+
+        torch.save(model_children, '/mnt/netcache/diag/grodriguez/CardiacOCT/model7.pt')
         # print('architecture', model_children)
         # print('###################\n')
         #counter to keep count of the conv layers
         counter = 0
         #append all the conv layers and their respective weights to the list
-        for i in range(len(model_children)):
+        # for i in range(len(model_children)):
         
-            for j in range(len(model_children[i])):
+        #     for j in range(len(model_children[i])):
 
-                if type(model_children[i][j]) == torch.nn.Conv2d:
+        #         if type(model_children[i][j]) == torch.nn.Conv2d:
 
-                    counter += 1
-                    model_weights.append(model_children[i][j].weight)
-                    conv_layers.append(model_children[i][j])
+        #             counter += 1
+        #             model_weights.append(model_children[i][j].weight)
+        #             conv_layers.append(model_children[i][j])
 
-                elif type(model_children[i][j]) == torch.nn.Sequential:
+        #         elif type(model_children[i][j]) == torch.nn.Sequential:
 
-                    for k in range(len(model_children[i][j])):
+        #             for k in range(len(model_children[i][j])):
 
-                        seq_children = list(model_children[i][j][k].children())
+        #                 seq_children = list(model_children[i][j][k].children())
 
-                        for element in range(len(seq_children)):
+        #                 for element in range(len(seq_children)):
 
-                            print(seq_children[element])
-                            if seq_children[element] == torch.nn.Conv2d:
-                                counter += 1
-                                model_weights.append(seq_children[element].weight)
-                                conv_layers.append(seq_children[element])
+        #                     print(seq_children[element])
+        #                     if seq_children[element] == torch.nn.Conv2d:
+        #                         counter += 1
+        #                         model_weights.append(seq_children[element].weight)
+        #                         conv_layers.append(seq_children[element])
 
 
-                        print('################\n')
+        #                 print('################\n')
                            
 
                                 # counter += 1
