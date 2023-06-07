@@ -224,9 +224,9 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
         print(patch_size)
 
-        dummy_input = np.random.randn(*patch_size)
+        dummy_input = torch.randn(21, 1, 768, 768, device='cuda')
         print('saving model network')
-        torch.onnx.export(trainer.network, torch.from_numpy(dummy_input).type(torch.float).cuda(), '/mnt/netcache/diag/grodriguez/CardiacOCT/{}.onnx'.format(output_filename))
+        torch.onnx.export(trainer.network, dummy_input, '/mnt/netcache/diag/grodriguez/CardiacOCT/{}.onnx'.format(output_filename))
 
         for p in params[1:]:
             trainer.load_checkpoint_ram(p, False)
