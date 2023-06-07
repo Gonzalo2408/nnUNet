@@ -225,7 +225,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         #we will save the 49 conv layers in this list
         conv_layers = []
         # get all the model children as list
-        model_children = list(trainer.network)
+        model_children = list(trainer.network.children())
         #counter to keep count of the conv layers
         counter = 0
         #append all the conv layers and their respective weights to the list
@@ -242,7 +242,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                             model_weights.append(child.weight)
                             conv_layers.append(child)
         print(f"Total convolution layers: {counter}")
-        print("conv_layers")
+        print("conv_layers", conv_layers)
         # vars(trainer)["patch_size"]
         # # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
         # patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
