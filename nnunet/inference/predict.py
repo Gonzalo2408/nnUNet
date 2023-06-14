@@ -220,66 +220,10 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
 
-        # print('architecture with type {}. {}'.format(type(trainer.network), trainer.network))
-        # print('###################\n')
-        model_weights = []
-        #we will save the 49 conv layers in this list
-        conv_layers = []
         # get all the model children as list
-        model_children = list(trainer.network.children())
+        model = trainer.network
+        torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial.pt')
 
-        torch.save(model_children, '/mnt/netcache/diag/grodriguez/CardiacOCT/model7.pt')
-        # print('architecture', model_children)
-        # print('###################\n')
-        #counter to keep count of the conv layers
-        counter = 0
-        #append all the conv layers and their respective weights to the list
-        # for i in range(len(model_children)):
-        
-        #     for j in range(len(model_children[i])):
-
-        #         if type(model_children[i][j]) == torch.nn.Conv2d:
-
-        #             counter += 1
-        #             model_weights.append(model_children[i][j].weight)
-        #             conv_layers.append(model_children[i][j])
-
-        #         elif type(model_children[i][j]) == torch.nn.Sequential:
-
-        #             for k in range(len(model_children[i][j])):
-
-        #                 seq_children = list(model_children[i][j][k].children())
-
-        #                 for element in range(len(seq_children)):
-
-        #                     print(seq_children[element])
-        #                     if seq_children[element] == torch.nn.Conv2d:
-        #                         counter += 1
-        #                         model_weights.append(seq_children[element].weight)
-        #                         conv_layers.append(seq_children[element])
-
-
-        #                 print('################\n')
-                           
-
-                                # counter += 1
-                                # model_weights.append(model_children[i][j][k][l].weight)
-                                # conv_layers.append(model_children[i][j][k][l])
-
-            # if type(model_children[i]) == torch.nn.Conv2d:
-            #     counter+=1
-            #     model_weights.append(model_children[i].weight)
-            #     conv_layers.append(model_children[i])
-
-            # elif type(model_children[i]) == torch.nn.Sequential:
-            #     for j in range(len(model_children[i])):
-            #         for child in model_children[i][j]:
-            #             if type(child) == torch.nn.Conv2d:
-            #                 counter+=1
-            #                 model_weights.append(child.weight)
-            #                 conv_layers.append(child)
-        print(f"Total convolution layers: {counter}")
-        print("conv_layers", conv_layers)
         # vars(trainer)["patch_size"]
         # # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
         # patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
