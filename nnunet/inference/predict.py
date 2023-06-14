@@ -222,7 +222,18 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
         # get all the model children as list
         model = trainer.network
-        torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial.pt')
+        #torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial.pt')
+
+        # Iterate through model attributes
+        for name, attribute in model.named_modules():
+            if hasattr(attribute, '__call__'):
+                try:
+                    # Try to pickle the attribute
+                    torch.save(attribute, 'test.pkl')
+                except Exception as e:
+                    # Attribute cannot be pickled
+                    print(f"Problematic attribute: {name}")
+                    print(f"Error message: {str(e)}")
 
         # vars(trainer)["patch_size"]
         # # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
