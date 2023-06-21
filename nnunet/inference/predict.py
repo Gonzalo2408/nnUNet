@@ -186,6 +186,12 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
     print("loading parameters for folds,", folds)
     trainer, params = load_model_and_checkpoint_files(model, folds, mixed_precision=mixed_precision,
                                                       checkpoint_name=checkpoint_name)
+    #######
+    print('saving model architecture')
+    model = list(trainer.network)
+    torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_7.pt')
+    #######
+
     if segmentation_export_kwargs is None:
         if 'segmentation_export_params' in trainer.plans.keys():
             force_separate_z = trainer.plans['segmentation_export_params']['force_separate_z']
@@ -219,19 +225,6 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
             d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=True,
             step_size=step_size, use_gaussian=True, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
-
-        # get all the model children as list
-        model = trainer.network.children()
-        torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial.pt')
-
-        # vars(trainer)["patch_size"]
-        # # We add a (1, 1,) to the shape here to function as a channel dimension and batch size
-        # patch_size = (1, 1,) + tuple([i for i in vars(trainer)["patch_size"]])
-        # print(patch_size)
-
-        # dummy_input = torch.randn(1, 21, 768, 768, device='cuda')
-        # print('saving model network')
-        # torch.onnx.export(trainer.network, dummy_input, '/mnt/netcache/diag/grodriguez/CardiacOCT/model7.onnx'.format(output_filename))
 
         for p in params[1:]:
             trainer.load_checkpoint_ram(p, False)
