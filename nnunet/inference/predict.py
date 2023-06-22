@@ -188,8 +188,8 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                                                       checkpoint_name=checkpoint_name)
     #######
     print('saving model architecture')
-    model = list(trainer.network)
-    torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_7.pt')
+    model = list(trainer.network.modules())
+    torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_8.pt')
     #######
 
     if segmentation_export_kwargs is None:
