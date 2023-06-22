@@ -188,7 +188,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                                                       checkpoint_name=checkpoint_name)
     #######
     print('saving model architecture')
-    model = list(trainer.network.modules())
+    model = list(trainer.network.children())
     torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_8.pt')
     #######
 
