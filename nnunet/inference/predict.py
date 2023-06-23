@@ -187,10 +187,11 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
     trainer, params = load_model_and_checkpoint_files(model, folds, mixed_precision=mixed_precision,
                                                       checkpoint_name=checkpoint_name)
     #######
-    print('saving model architecture')
-    model = list(trainer.network.children())
-    torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_8.pt')
+    # print('saving model architecture')
+    # model = list(trainer.network.children())
+    # torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_8.pt')
     #######
+    print(trainer.network)
 
     if segmentation_export_kwargs is None:
         if 'segmentation_export_params' in trainer.plans.keys():
@@ -281,8 +282,6 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                                                 None, None,
                                                 npz_file, None, force_separate_z, interpolation_order_z),)
                                               ))
-        #I'm doing one file now for quicker experiments
-        break
 
     print("inference done. Now waiting for the segmentation export to finish...")
     _ = [i.get() for i in results]
