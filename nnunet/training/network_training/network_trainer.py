@@ -525,6 +525,13 @@ class NetworkTrainer(object):
             self.save_checkpoint(join(self.output_folder, "model_latest.model"))
             self.print_to_log_file("done")
 
+        #Saving specific checkpoints
+        if self.epoch == 200 or self.epoch == 400 or self.epoch == 600 or self.epoch == 800:
+            self.save_checkpoint(join(self.output_folder, "model_{}.model".format(self.epoch)))
+            self.print_to_log_file("Epoch {}. Saving...".format(self.epoch))
+
+
+
     def update_eval_criterion_MA(self):
         """
         If self.all_val_eval_metrics is unused (len=0) then we fall back to using -self.all_val_losses for the MA to determine early stopping
