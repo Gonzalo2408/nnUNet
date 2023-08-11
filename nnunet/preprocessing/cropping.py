@@ -91,7 +91,8 @@ def crop_to_nonzero(data, seg=None, nonzero_label=-1):
     :return:
     """
     nonzero_mask = create_nonzero_mask(data)
-    bbox = get_bbox_from_mask(nonzero_mask, 0)
+    #bbox = get_bbox_from_mask(nonzero_mask, 0)
+    bbox = [[0, 155], [0, 225], [40, 200]]
 
     cropped_data = []
     for c in range(data.shape[0]):

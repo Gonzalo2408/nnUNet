@@ -132,7 +132,7 @@ def preprocess_multithreaded(trainer, list_of_lists, output_files, num_processes
 
 
 def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_threads_preprocessing,
-                  num_threads_nifti_save, segs_from_prev_stage=None, do_tta=False, mixed_precision=True,
+                  num_threads_nifti_save, segs_from_prev_stage=None, do_tta=True, mixed_precision=True,
                   overwrite_existing=False,
                   all_in_gpu=False, step_size=0.5, checkpoint_name="model_final_checkpoint",
                   segmentation_export_kwargs: dict = None, disable_postprocessing: bool = False):
@@ -223,14 +223,14 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
         print("predicting", output_filename)
         trainer.load_checkpoint_ram(params[0], False)
         softmax = trainer.predict_preprocessed_data_return_seg_and_softmax(
-            d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=False,
+            d, do_mirroring=False, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=False,
             step_size=step_size, use_gaussian=False, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
 
         for p in params[1:]:
             trainer.load_checkpoint_ram(p, False)
             softmax += trainer.predict_preprocessed_data_return_seg_and_softmax(
-                d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=False,
+                d, do_mirroring=False, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=False,
                 step_size=step_size, use_gaussian=False, all_in_gpu=all_in_gpu,
                 mixed_precision=mixed_precision)[1]
 
