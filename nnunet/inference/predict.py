@@ -132,7 +132,7 @@ def preprocess_multithreaded(trainer, list_of_lists, output_files, num_processes
 
 
 def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_threads_preprocessing,
-                  num_threads_nifti_save, segs_from_prev_stage=None, do_tta=True, mixed_precision=True,
+                  num_threads_nifti_save, segs_from_prev_stage=None, do_tta=False, mixed_precision=True,
                   overwrite_existing=False,
                   all_in_gpu=False, step_size=0.5, checkpoint_name="model_final_checkpoint",
                   segmentation_export_kwargs: dict = None, disable_postprocessing: bool = False):
@@ -191,7 +191,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
     # model = list(trainer.network.children())
     # torch.save(model, '/mnt/netcache/diag/grodriguez/CardiacOCT/model_trial_8.pt')
     #######
-    print(trainer.network)
+    # print(trainer.network)
 
     if segmentation_export_kwargs is None:
         if 'segmentation_export_params' in trainer.plans.keys():
@@ -283,6 +283,8 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                                                 npz_file, None, force_separate_z, interpolation_order_z),)
                                               ))
 
+        break
+    
     print("inference done. Now waiting for the segmentation export to finish...")
     _ = [i.get() for i in results]
     # now apply postprocessing
