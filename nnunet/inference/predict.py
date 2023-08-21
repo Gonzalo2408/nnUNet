@@ -283,8 +283,6 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
                                                 npz_file, None, force_separate_z, interpolation_order_z),)
                                               ))
 
-        break
-
     print("inference done. Now waiting for the segmentation export to finish...")
     _ = [i.get() for i in results]
     # now apply postprocessing
