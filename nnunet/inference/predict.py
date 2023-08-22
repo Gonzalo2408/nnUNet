@@ -222,15 +222,18 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
         print("predicting", output_filename)
         trainer.load_checkpoint_ram(params[0], False)
-        softmax = trainer.predict_preprocessed_data_return_seg_and_softmax(
-            d, do_mirroring=False, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=False,
+        softmax, features = trainer.predict_preprocessed_data_return_seg_and_softmax(
+            d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=True,
             step_size=step_size, use_gaussian=False, all_in_gpu=all_in_gpu,
             mixed_precision=mixed_precision)[1]
+        
+        print(len(features))
+        print([x.shape for x in range(len(features))])
 
         for p in params[1:]:
             trainer.load_checkpoint_ram(p, False)
-            softmax += trainer.predict_preprocessed_data_return_seg_and_softmax(
-                d, do_mirroring=False, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=False,
+            softmax, features += trainer.predict_preprocessed_data_return_seg_and_softmax(
+                d, do_mirroring=do_tta, mirror_axes=trainer.data_aug_params['mirror_axes'], use_sliding_window=True,
                 step_size=step_size, use_gaussian=False, all_in_gpu=all_in_gpu,
                 mixed_precision=mixed_precision)[1]
 
