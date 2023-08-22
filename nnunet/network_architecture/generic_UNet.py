@@ -167,9 +167,6 @@ class Upsample(nn.Module):
         self.count = 0
 
     def forward(self, x):
-
-        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds_second_split/prueba_features/convup_{}_{}.pt'.format(x.shape, self.count))
-        self.count += 1
         return nn.functional.interpolate(x, size=self.size, scale_factor=self.scale_factor, mode=self.mode,
                                          align_corners=self.align_corners)
 
