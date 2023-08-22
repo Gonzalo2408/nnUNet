@@ -64,7 +64,9 @@ class ConvDropoutNormNonlin(nn.Module):
     def forward(self, x):
         x = self.conv(x)
 
-        print('Conv layer shape', x.shape)
+        #print('Conv layer shape', x.shape)
+
+        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds-second-split/prueba_features/conv_{}'.format(x.shape))
         if self.dropout is not None:
             x = self.dropout(x)
         return self.lrelu(self.instnorm(x))
@@ -395,9 +397,6 @@ class Generic_UNet(SegmentationNetwork):
             skips.append(x)
             if not self.convolutional_pooling:
                 x = self.td[d](x)
-
-        x = self.conv_blocks_context[-1](x)
-        print(' Encoder feature map', x.shape)
 
         for u in range(len(self.tu)):
             x = self.tu[u](x)
