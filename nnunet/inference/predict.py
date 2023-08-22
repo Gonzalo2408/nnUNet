@@ -180,7 +180,7 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz, num_t
 
         print("number of cases that still need to be predicted:", len(cleaned_output_files))
 
-    print("emptying cuda cache. Predict cases")
+    print("emptying cuda cache")
     torch.cuda.empty_cache()
 
     print("loading parameters for folds,", folds)

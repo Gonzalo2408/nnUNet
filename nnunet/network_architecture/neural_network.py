@@ -573,6 +573,7 @@ class SegmentationNetwork(NeuralNetwork):
         #   we now return a cuda tensor! Not numpy array!
 
         assert len(x.shape) == 4, 'x must be (b, c, x, y)'
+        print('do mirroring, ', do_mirroring)
 
         x = maybe_to_torch(x)
         result_torch = torch.zeros([x.shape[0], self.num_classes] + list(x.shape[2:]), dtype=torch.float)
