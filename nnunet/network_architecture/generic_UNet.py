@@ -66,7 +66,7 @@ class ConvDropoutNormNonlin(nn.Module):
 
         #print('Conv layer shape', x.shape)
 
-        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds-second-split/prueba_features/conv_{}'.format(x.shape))
+        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds-second-split/prueba_features/conv_{}.pt'.format(x.shape))
         if self.dropout is not None:
             x = self.dropout(x)
         return self.lrelu(self.instnorm(x))
