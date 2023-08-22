@@ -51,6 +51,7 @@ class ConvDropoutNormNonlin(nn.Module):
         self.conv_kwargs = conv_kwargs
         self.conv_op = conv_op
         self.norm_op = norm_op
+        self.count = 0
 
         self.conv = self.conv_op(input_channels, output_channels, **self.conv_kwargs)
         if self.dropout_op is not None and self.dropout_op_kwargs['p'] is not None and self.dropout_op_kwargs[
@@ -66,7 +67,8 @@ class ConvDropoutNormNonlin(nn.Module):
 
         #print('Conv layer shape', x.shape)
 
-        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds_second_split/prueba_features/conv_{}.pt'.format(x.shape))
+        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds_second_split/prueba_features/conv_{}.pt'.format(self.count))
+        self.count += 1
         if self.dropout is not None:
             x = self.dropout(x)
         return self.lrelu(self.instnorm(x))
@@ -162,8 +164,14 @@ class Upsample(nn.Module):
         self.mode = mode
         self.scale_factor = scale_factor
         self.size = size
+        self.count = 0
 
     def forward(self, x):
+
+        torch.save(nn.functional.interpolate(x, size=self.size, scale_factor=self.scale_factor, mode=self.mode,
+                                         align_corners=self.align_corners), '/mnt/netcache/diag/grodriguez/CardiacOCT/preds_second_split/prueba_features/conv_up_{}.pt'.format(self.count))
+        self.count += 1
+
         return nn.functional.interpolate(x, size=self.size, scale_factor=self.scale_factor, mode=self.mode,
                                          align_corners=self.align_corners)
 
