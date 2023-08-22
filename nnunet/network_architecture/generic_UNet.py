@@ -397,6 +397,8 @@ class Generic_UNet(SegmentationNetwork):
         x = self.conv_blocks_context[-1](x)
         feature_maps.append(x)
         #print('Feature map', x.shape)
+        print(len(feature_maps))
+        print(x.shape)
 
         for u in range(len(self.tu)):
             x = self.tu[u](x)
