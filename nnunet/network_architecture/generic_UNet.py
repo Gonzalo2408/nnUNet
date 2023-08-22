@@ -63,6 +63,8 @@ class ConvDropoutNormNonlin(nn.Module):
 
     def forward(self, x):
         x = self.conv(x)
+
+        print('Conv layer shape', x.shape)
         if self.dropout is not None:
             x = self.dropout(x)
         return self.lrelu(self.instnorm(x))
@@ -395,10 +397,7 @@ class Generic_UNet(SegmentationNetwork):
                 x = self.td[d](x)
 
         x = self.conv_blocks_context[-1](x)
-        feature_maps.append(x)
-        #print('Feature map', x.shape)
-        print(len(feature_maps))
-        print(x.shape)
+        print(' Encoder feature map', x.shape)
 
         for u in range(len(self.tu)):
             x = self.tu[u](x)
