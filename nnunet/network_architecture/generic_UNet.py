@@ -67,7 +67,7 @@ class ConvDropoutNormNonlin(nn.Module):
 
         #print('Conv layer shape', x.shape)
 
-        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds_second_split/prueba_features/conv_{}.pt'.format(self.count))
+        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/preds_second_split/prueba_features/conv_{}_{}.pt'.format(x.shape, self.count))
         self.count += 1
         if self.dropout is not None:
             x = self.dropout(x)
