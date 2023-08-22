@@ -391,12 +391,14 @@ class Generic_UNet(SegmentationNetwork):
     def forward(self, x):
         skips = []
         seg_outputs = []
-        feature_maps = []
+
         for d in range(len(self.conv_blocks_context) - 1):
             x = self.conv_blocks_context[d](x)
             skips.append(x)
             if not self.convolutional_pooling:
                 x = self.td[d](x)
+
+        x = self.conv_blocks_context[-1](x)
 
         for u in range(len(self.tu)):
             x = self.tu[u](x)
