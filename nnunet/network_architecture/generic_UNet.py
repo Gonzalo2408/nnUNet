@@ -67,11 +67,14 @@ class ConvDropoutNormNonlin(nn.Module):
 
         #print('Conv layer shape', x.shape)
 
-        torch.save(x, '/mnt/netcache/diag/grodriguez/CardiacOCT/feature_maps/conv_{}_{}.pt'.format(x.shape, self.count))
-        self.count += 1
         if self.dropout is not None:
             x = self.dropout(x)
-        return self.lrelu(self.instnorm(x))
+
+        fmap = self.lrelu(self.instnorm(x))
+        torch.save(fmap, '/mnt/netcache/diag/grodriguez/CardiacOCT/feature_maps/conv_{}_{}.pt'.format(fmap.shape, self.count))
+        self.count += 1
+        
+        return fmap
 
 
 class ConvDropoutNonlinNorm(ConvDropoutNormNonlin):
