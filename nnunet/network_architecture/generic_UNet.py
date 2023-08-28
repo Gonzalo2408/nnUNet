@@ -65,9 +65,6 @@ class ConvDropoutNormNonlin(nn.Module):
     def forward(self, x):
         x = self.conv(x)
 
-        #print('Conv layer shape', x.shape)
-
-
         if self.dropout is not None:
             x = self.dropout(x)
 
@@ -76,7 +73,7 @@ class ConvDropoutNormNonlin(nn.Module):
         torch.save(fmap, '/mnt/netcache/diag/grodriguez/CardiacOCT/feature_maps/conv_{}_{}.pt'.format(fmap.shape, self.count))
         self.count += 1
 
-        return map
+        return fmap
 
 
 class ConvDropoutNonlinNorm(ConvDropoutNormNonlin):
