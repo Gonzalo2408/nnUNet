@@ -73,7 +73,7 @@ class ConvDropoutNormNonlin(nn.Module):
 
         fmap = self.lrelu(self.instnorm(x))
 
-        torch.save(fmap, '/mnt/netcache/diag/grodriguez/CardiacOCT/feature_maps/conv_{}_{}.pt'.format(x.shape, self.count))
+        torch.save(fmap, '/mnt/netcache/diag/grodriguez/CardiacOCT/feature_maps/conv_{}_{}.pt'.format(fmap.shape, self.count))
         self.count += 1
 
         return map
